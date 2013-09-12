@@ -1,0 +1,182 @@
+.galleryViewPort {
+	margin-bottom: 20px;
+	min-height: 425px;
+	max-width: 640px;
+}
+.box-gallery{
+	position: relative;
+	overflow: hidden;
+}
+.box-gallery.hidden {
+	display: none;
+}
+.headerTitleGallery{
+	background: #454D4F;
+	background: rgba(69,77,79,.8);
+	position: absolute;
+	width: 100%;
+	color: #fff;
+	overflow: hidden;
+	z-index: 1;
+}
+.headerTitleGallery .textHeader{
+	font: normal 16px/20px verdana;
+	padding: 10px 20px;
+	margin: 0;
+}
+.bx-slider {
+	top: 0;
+	margin: 0;
+	padding: 0;
+}
+.bx-wrapper {
+	position: relative;
+	overflow: hidden;
+}
+.bx-wrapper .bx-viewport {
+	left: 0;
+	border:none;	
+}
+
+.bx-wrapper .bx-slider li {
+	background: none;
+	padding: 0;
+	margin: 0;
+}
+
+.bx-wrapper .bx-slider li .content-gallery {
+	position: relative;
+}
+
+
+.bx-wrapper .bx-slider li .content-gallery .infosBottom {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: #454D4F;
+	background: rgba(69,77,79,1);
+	color: #fff;
+	border-left: 7px solid #2997A6;
+	overflow: hidden;
+}
+
+.bx-wrapper .bx-slider li .content-gallery .infosBottom .text {
+	float: left;
+	display: inline-block;
+	width: 65%;
+	padding: 10px 0px 10px 10px;
+}
+
+.bx-wrapper .bx-slider li .content-gallery .infosBottom .text p {
+	margin: 0;
+	padding: 0;
+}
+
+.bx-wrapper .bx-slider li .content-gallery .infosBottom .text .title {
+	font: normal 14px/16px verdana;
+	padding-bottom: 5px;
+}
+
+.bx-wrapper .bx-slider li .content-gallery .infosBottom .text .description {
+	margin: 0;
+	padding: 0;
+	font: normal 10px/12px verdana;
+}
+
+.bx-wrapper .bx-slider li .content-gallery .infosBottom .pageOfPages {
+	float: right;
+	width: 25%;
+	display: inline-block;
+	text-align: right;
+	padding: 20px 10px 15px 0;
+}
+
+.bx-wrapper .bx-slider li .content-gallery .infosBottom .pageOfPages span {
+	font: normal 26px/30px verdana;
+}
+
+.bx-wrapper .bx-slider li .content-gallery .infosBottom .pageOfPages span.divider {
+	color: #2997A6;
+}
+
+.bx-wrapper .bx-controls .bx-prev,
+.bx-wrapper .bx-controls .bx-next {
+	top: 56px;
+	width: 40px;
+	bottom: 65px;
+	height: auto;
+	position: absolute;
+	background: #454D4F;
+	background: rgba(69,77,79,.4);
+}
+.bx-wrapper .bx-controls .bx-next {
+	right: 0;
+}
+
+.bx-wrapper .bx-controls .bullet {
+	width: 0;
+	height: 0;
+	padding: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -10px;
+	margin-left: -5px;
+}
+.bx-prev .bullet {
+	border-bottom: 10px solid transparent;
+	border-left: 0;
+	border-top: 10px solid transparent;
+	border-right: 10px solid #fff;
+}
+.bx-next .bullet {
+	border-bottom: 10px solid transparent;
+	border-right: 0;
+	border-top: 10px solid transparent;
+	border-left: 10px solid #fff;
+}
+
+.changeGallery {
+	padding: 40px 0 20px 0;
+}
+.changeGallery .gallery {
+	position: relative;
+	float: left;
+	width: 33%;
+	margin: 0 20px;
+	text-align: center;
+}
+.changeGallery .gallery a {
+	text-align: center;
+	display: block;
+	color: #666;
+	text-decoration: none !important;
+}
+.changeGallery .gallery.active a,
+.changeGallery .gallery a:hover {
+	text-decoration: underline !important;
+}
+.changeGallery .gallery a > img {
+	width: 150px;
+	position: relative;
+	margin: 0 auto;
+}
+.changeGallery .gallery a .icon {
+	width: 150px;
+	height: 100px;
+	position: absolute;
+	top: 0;
+	left: 50%;
+	margin-left: -75px;
+}
+.changeGallery .gallery.active a .icon {
+	background: url('../img/check.png') no-repeat center center;
+	background-size: 55px;
+	background-color: rgba(255,255,255,.4);
+}
+.changeGallery .gallery a .title {
+	padding: 0 20px;
+	text-align: center;
+	margin: 0;
+}
