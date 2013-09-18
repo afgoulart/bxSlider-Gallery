@@ -18,8 +18,10 @@
 	color: #fff;
 	overflow: hidden;
 	z-index: 1;
+	transition: top 1s;
+	-webkit-transition: top 1s;
 }
-.headerTitleGallery .textHeader{
+#galeria .headerTitleGallery .textHeader{
 	font: normal 16px/20px verdana;
 	padding: 10px 20px;
 	margin: 0;
@@ -32,10 +34,13 @@
 .bx-wrapper {
 	position: relative;
 	overflow: hidden;
+
+	transition: height 1s;
+	-webkit-transition: height 1s;
 }
 .bx-wrapper .bx-viewport {
 	left: 0;
-	border:none;	
+	border:none;
 }
 
 .bx-wrapper .bx-slider li {
@@ -46,6 +51,11 @@
 
 .bx-wrapper .bx-slider li .content-gallery {
 	position: relative;
+}
+
+.bx-wrapper .bx-slider li .content-gallery img{
+	max-width: 100%;
+	cursor: pointer;
 }
 
 
@@ -59,6 +69,8 @@
 	color: #fff;
 	border-left: 7px solid #2997A6;
 	overflow: hidden;
+	transition: bottom 1s;
+	-webkit-transition: bottom 1s;
 }
 
 .bx-wrapper .bx-slider li .content-gallery .infosBottom .text {
@@ -68,7 +80,7 @@
 	padding: 10px 0px 10px 10px;
 }
 
-.bx-wrapper .bx-slider li .content-gallery .infosBottom .text p {
+#galeria .bx-wrapper .bx-slider li .content-gallery .infosBottom .text p {
 	margin: 0;
 	padding: 0;
 }
@@ -102,16 +114,20 @@
 
 .bx-wrapper .bx-controls .bx-prev,
 .bx-wrapper .bx-controls .bx-next {
-	top: 56px;
+	top: 40px;
 	width: 40px;
 	bottom: 65px;
 	height: auto;
 	position: absolute;
-	background: #454D4F;
+	background: #454d4f;
 	background: rgba(69,77,79,.4);
+	transition: left 1s;
+	-webkit-transition: left 1s;
 }
 .bx-wrapper .bx-controls .bx-next {
 	right: 0;
+	transition: right 1s;
+	-webkit-transition: right 1s;
 }
 
 .bx-wrapper .bx-controls .bullet {
@@ -142,16 +158,19 @@
 }
 .changeGallery .gallery {
 	position: relative;
+	display: inline-block;
 	float: left;
-	width: 33%;
-	margin: 0 20px;
+	width: 150px;
+	margin: 5px;
 	text-align: center;
+	min-height: 150px;
 }
 .changeGallery .gallery a {
 	text-align: center;
 	display: block;
 	color: #666;
 	text-decoration: none !important;
+	background: #fff;
 }
 .changeGallery .gallery.active a,
 .changeGallery .gallery a:hover {
@@ -161,7 +180,10 @@
 	width: 150px;
 	position: relative;
 	margin: 0 auto;
+	background: #FFF;
 }
+.changeGallery .gallery.active a > img {opacity: .6;}
+.no-rgba .changeGallery .gallery.active a > img {filter: alpha(opacity=60);} /*Usando classe do modernizr*/
 .changeGallery .gallery a .icon {
 	width: 150px;
 	height: 100px;
@@ -171,12 +193,11 @@
 	margin-left: -75px;
 }
 .changeGallery .gallery.active a .icon {
-	background: url('../img/check.png') no-repeat center center;
-	background-size: 55px;
-	background-color: rgba(255,255,255,.4);
+	background: url('img/check.png') no-repeat center center;
+	background-size: 50px 50px; /*IE 8- nao possue essa propriedade usar a imagem menor.*/
 }
 .changeGallery .gallery a .title {
-	padding: 0 20px;
+	padding: 5px 10px;
 	text-align: center;
 	margin: 0;
 }
