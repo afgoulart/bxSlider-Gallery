@@ -199,7 +199,7 @@ var gallerySliders = {};
 	
 	$.fn.createSlide = function(idGallery){
 		console.log('settings.seletorGallery',settings.seletorGallery);
-		var $galleryContent = $(idGallery);
+		var $galleryContent = $('#'+idGallery);
 		var idGallery = $galleryContent.id();
 		this.data('galleryLoaded', true);
 		if(settings.optionsBxSlider.onSliderLoad)
