@@ -26,6 +26,17 @@
 	padding: 10px 20px;
 	margin: 0;
 }
+
+.box-gallery.hidden {
+	visibility: hidden;
+}
+
+#galeria .data_ref{
+	font-size: 11px;
+	color: #999;
+	font-style: italic;
+}
+
 .bx-slider {
 	top: 0;
 	margin: 0;
@@ -182,8 +193,12 @@
 	margin: 0 auto;
 	background: #FFF;
 }
-.changeGallery .gallery.active a > img {opacity: .6;}
-.no-rgba .changeGallery .gallery.active a > img {filter: alpha(opacity=60);} /*Usando classe do modernizr*/
+.changeGallery .gallery.active a > img {
+	opacity: .6;
+}
+.no-rgba .changeGallery .gallery.active a > img {
+	filter: alpha(opacity=60);
+}
 .changeGallery .gallery a .icon {
 	width: 150px;
 	height: 100px;
@@ -194,7 +209,6 @@
 }
 .changeGallery .gallery.active a .icon {
 	background: url('img/check.png') no-repeat center center;
-	background-size: 50px 50px; /*IE 8- nao possue essa propriedade usar a imagem menor.*/
 }
 .changeGallery .gallery a .title {
 	padding: 5px 10px;
