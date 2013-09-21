@@ -1,5 +1,26 @@
 var gallerySliders = {};
 (function(){
+	/* 
+		Galeria de fotos jquery
+		
+		Autores:
+		André Filipe 
+		afgoulart.rj@gmail.com || @afgoulart || fb/afgoulart.rj
+
+		Diego Zoracky
+
+		repositório
+		https://github.com/afgoulart/bxSlider-Gallery
+
+		Require:
+			- jQuery 1.7.2+
+			- bxSlider - http://bxslider.com/
+				(Docs bxSlider - http://bxslider.com/options)
+		Opcional:
+			- Modernizr para detectar os recursos de HTML5 e CSS3 do navegador do usuário.
+			(Modernizr - http://modernizr.com/)
+	*/
+
 	Gallerybuild = function(opt){
 		if(!opt) var opt = {};
 
@@ -17,17 +38,21 @@ var gallerySliders = {};
 			seletorChangeGalleryContentLink: '.gallery',
 			keybordControls: true,
 			optionsBxSlider: {
-
 			}
 		};
 
 		$.extend(settings, opt);
 
 		var $allGalleries = $(settings.seletorGallery);
-		
+
 		if(!$allGalleries.size()) return false;
-		
-		$allGalleries.css('visibility', 'hidden');
+
+
+		$(settings.seletorParentGallery).on('click.togglePainels', '.content-gallery img', function(){
+			$(this).parents(settings.seletorGallery).togglePainels('slow', false);
+		});
+
+		$allGalleries.addClass('hidden');
 
 		//TODO :: ajustar esse trecho
 		var $galleryContent = $allGalleries.eq(0);
@@ -38,30 +63,58 @@ var gallerySliders = {};
 			e.preventDefault();
 			var $link = $(this);
 			var idGallery = $link.data('target');
-			var $currentGallery = $(settings.seletorGallery + ':visible');
-
-			if($currentGallery.attr('id') == idGallery && $currentGallery.size() == 1) return false;
-
+			var $currentGallery = $(settings.seletorGallery).filter('.current-gallery');
 			var $gallery = $('#'+idGallery);
-			$gallery.togglePainels('slow', true);
 
-			$currentGallery.fadeOut(200,function(){
-				$(settings.seletorChangeGallery + " " + settings.seletorChangeGalleryContentLink).removeClass('active');
+			if($(settings.seletorGallery).size() === 1){
 
 				if(!$gallery.find('.bx-slider').data('galleryLoaded')){
-					$gallery.css('visibility', 'hidden');
+					$gallery.addClass('hidden');
 					$gallery.find('.bx-slider').createSlide(idGallery);
 					$gallery.find(settings.seletorsPanelGalley).data('element-hide',true).addClass(settings.classPanelGallery);
+
+					$gallery.fadeIn(200, function(){
+						$gallery.addClass('current-gallery');
+						$gallery.removeClass('hidden');
+						$link.parent().addClass('active');
+					});
 				}
 
-				$gallery.fadeIn(200, function(){
-					$gallery.css('visibility', 'visible');
-					$link.parent().addClass('active');
+			}else{
+
+				if($currentGallery.size() === 1 && $currentGallery.attr('id') == idGallery){
+					return false;
+				}
+
+				$gallery.togglePainels('slow', true);
+
+				if($currentGallery.size() === 0){
+					$currentGallery = $gallery;
+				}
+
+				$currentGallery.fadeOut(200, function(){
+					$currentGallery.removeClass('current-gallery');
+					$(settings.seletorChangeGallery + " " + settings.seletorChangeGalleryContentLink).removeClass('active');
+
+					if(!$gallery.find('.bx-slider').data('galleryLoaded')){
+						$gallery.addClass('hidden');
+						$gallery.find('.bx-slider').createSlide(idGallery);
+						$gallery.find(settings.seletorsPanelGalley).data('element-hide',true).addClass(settings.classPanelGallery);
+					}
+
+					$gallery.fadeIn(200, function(){
+						$gallery.addClass('current-gallery')
+						$gallery.removeClass('hidden');
+						$link.parent().addClass('active');
+					});
 				});
-			});
+
+			}
 
 			return false;
 		});
+
+		$(settings.seletorChangeGallery + " a").first().trigger('click');
 
 		if(settings.keybordControls){
 			$(window).on({
@@ -73,11 +126,11 @@ var gallerySliders = {};
 					if(event.which == 39){ //NEXT
 						$currentGallery.find('.bx-next').trigger('click');
 					}
-					
+
 					if(event.which == 38){ //PREV GALLERY
 						$currentGallery.changeGalleryKeybord('prev');
 					}
-					
+
 					if(event.which == 40){ //NEXT GALLERY
 						$currentGallery.changeGalleryKeybord('next');
 					}
@@ -87,25 +140,18 @@ var gallerySliders = {};
 					if(event.which == 38){ //PREV GALLERY
 						event.preventDefault();
 					}
-					
+
 					if(event.which == 40){ //NEXT GALLERY
 						event.preventDefault();
-					}	
+					}
 				}
 			});
 		}
 
-		$(settings.seletorChangeGallery + " a").first().trigger('click');
-	};
-
-
-
-	$.fn.id = function(){
-		return this.attr('id');
 	};
 
 	$.fn.changeGalleryKeybord = function(direction){
-		var id = this.id();
+		var id = this.get(0).id;
 		switch(direction){
 			case "prev":
 				$(settings.seletorChangeGallery + ' a[data-target="' + id + '"]').parent().prev().find('a').trigger('click');
@@ -120,14 +166,15 @@ var gallerySliders = {};
 		if(!speedAction) speedAction = 1000;
 		if(!force_show) force_show = false;
 		if(!$elPanels) $elPanels = this.find('.'+settings.classPanelGallery);
-	
+
+
 		$elPanels.each(function(){
 			var $this = $(this);
 			var direction = $this.data('direction-hide');
 			var elHide = $this.data('element-hide');
 			var height = $this.height();
 			var width = $this.width();
-			var checkCSSTransition = $('html').hasClass('csstransitions');
+			var checkCSSTransition = $('html').hasClass('csstransitions') || 'transition' in document.getElementsByTagName('body').item().style;
 			if(elHide && !force_show){
 				switch(direction){
 					case 'top':
@@ -196,29 +243,30 @@ var gallerySliders = {};
 		});
 		return this;
 	};
-	
+
 	$.fn.createSlide = function(idGallery){
-		console.log('settings.seletorGallery',settings.seletorGallery);
-		var $galleryContent = $('#'+idGallery);
-		var idGallery = $galleryContent.id();
+		var $thisGallery = $('#'+idGallery);
+
 		this.data('galleryLoaded', true);
 		if(settings.optionsBxSlider.onSliderLoad)
 			var defaultOnSliderLoad = settings.optionsBxSlider.onSliderLoad;
 		else
 			var defaultOnSliderLoad = function(){};
 
+		if(!settings.optionsBxSlider.touchEnabled){
+			var is_touch_device = 'ontouchstart' in document;
+			settings.optionsBxSlider.touchEnabled = is_touch_device;
+		}
+
 		settings.optionsBxSlider.onSliderLoad = function(currentIndex){
 			defaultOnSliderLoad(currentIndex);
 			$slideContent.find('li:eq('+(currentIndex+1)+')').addClass('item-current');
 
-			$galleryContent.find(settings.seletorNext).data('direction-hide', 'right');
-			$galleryContent.find(settings.seletorPrev).data('direction-hide', 'left');
-			$galleryContent.find(settings.seletorHeader).data('direction-hide', 'top');
-			$galleryContent.find(settings.seletorFooter).data('direction-hide', 'bottom');
-			$galleryContent.find(settings.seletorsPanelGalley).data('element-hide', true).addClass(settings.classPanelGallery);
-			$galleryContent.on('click.togglePainels', 'img', function(){
-				$galleryContent.togglePainels('slow', false);
-			});
+			$thisGallery.find(settings.seletorNext).data('direction-hide', 'right');
+			$thisGallery.find(settings.seletorPrev).data('direction-hide', 'left');
+			$thisGallery.find(settings.seletorHeader).data('direction-hide', 'top');
+			$thisGallery.find(settings.seletorFooter).data('direction-hide', 'bottom');
+			$thisGallery.find(settings.seletorsPanelGalley).data('element-hide', true).addClass(settings.classPanelGallery);
 
 			if(settings.callback && settings.callback.onSliderLoad)
 				settings.callback.onSliderLoad();
@@ -242,17 +290,13 @@ var delayExecution = (function(){
 })();
 
 $(document).ready(function($) {
-	var is_touch_device = 'ontouchstart' in document;
+	
 	var options = {
 		optionsBxSlider: {
 			pager: false,
 			adaptiveHeight: true,
 			prevText:'<span class="bullet"></span>',
 			nextText:'<span class="bullet"></span>',
-			touchEnabled: is_touch_device,
-			onSliderLoad: function(currentIndex){
-				
-			},
 			onSlideBefore:function($slideElement, oldIndex, newIndex){
 				$slideElement.parent().find('li:eq('+(oldIndex+1)+')').removeClass('item-current');
 			},
