@@ -34,6 +34,7 @@ var gallerySliders = {};
 			seletorGallery: '.box-gallery',
 			seletorGlobalGallery: '#galeria',
 			seletorParentGallery: '.galleryViewPort',
+			seletorContentGallery: '.content-gallery',
 			seletorChangeGallery: '.changeGallery',
 			seletorChangeGalleryContentLink: '.gallery',
 			keybordControls: true,
@@ -125,6 +126,10 @@ var gallerySliders = {};
 					}
 					if(event.which == 39){ //NEXT
 						$currentGallery.find('.bx-next').trigger('click');
+					}
+
+					if(event.which == 13){ //HIDE PANELS
+						$currentGallery.find('.item-current ' + settings.seletorContentGallery + ' > img').trigger('click');
 					}
 
 					if(event.which == 38){ //PREV GALLERY
